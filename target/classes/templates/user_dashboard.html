@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="" />
+    <link
+            rel="stylesheet"
+            as="style"
+            onload="this.rel='stylesheet'"
+            href="https://fonts.googleapis.com/css2?display=swap&family=Noto+Sans%3Awght%40400%3B500%3B700%3B900&family=Public+Sans%3Awght%40400%3B500%3B700%3B900"
+    />
+
+    <title>Stitch Design - Applications</title>
+    <link rel="icon" type="image/x-icon" href="data:image/x-xicon;base64," />
+
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+</head>
+<body>
+<div class="relative flex size-full min-h-screen flex-col bg-white group/design-root overflow-x-hidden" style='font-family: "Public Sans", "Noto Sans", sans-serif;'>
+    <div class="layout-container flex h-full grow flex-col">
+        <header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#f0f2f5] px-10 py-3">
+            <div class="flex items-center gap-4 text-[#111518]">
+                <div class="size-4">
+                    <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <g clip-path="url(#clip0_6_319)">
+                            <path
+                                    d="M8.57829 8.57829C5.52816 11.6284 3.451 15.5145 2.60947 19.7452C1.76794 23.9758 2.19984 28.361 3.85056 32.3462C5.50128 36.3314 8.29667 39.7376 11.8832 42.134C15.4698 44.5305 19.6865 45.8096 24 45.8096C28.3135 45.8096 32.5302 44.5305 36.1168 42.134C39.7033 39.7375 42.4987 36.3314 44.1494 32.3462C45.8002 28.361 46.2321 23.9758 45.3905 19.7452C44.549 15.5145 42.4718 11.6284 39.4217 8.57829L24 24L8.57829 8.57829Z"
+                                    fill="currentColor"
+                            ></path>
+                        </g>
+                        <defs>
+                            <clipPath id="clip0_6_319"><rect width="48" height="48" fill="white"></rect></clipPath>
+                        </defs>
+                    </svg>
+                </div>
+                <h2 class="text-[#111518] text-lg font-bold leading-tight tracking-[-0.015em]">Acme Co</h2>
+            </div>
+            <div class="flex flex-1 justify-end gap-8">
+                <div class="flex items-center gap-9">
+                    <a class="text-[#111518] text-sm font-medium leading-normal" href="#">Dashboard</a>
+                    <a class="text-[#111518] text-sm font-medium leading-normal" href="#">Applications</a>
+                    <a class="text-[#111518] text-sm font-medium leading-normal" href="#">Documents</a>
+                    <a class="text-[#111518] text-sm font-medium leading-normal" href="#">Support</a>
+                    <form th:action="@{/logout}" method="post" class="inline-block m-0 p-0">
+                  <button type="submit" 
+                          class="flex cursor-pointer items-center justify-center overflow-hidden rounded-md h-8 px-4 bg-[#dc3545] text-white text-sm font-medium leading-normal">
+                      <span class="truncate">Logout</span>
+                  </button>
+              </form>
+                </div>
+                <div
+                        class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10"
+                        style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAo1bwVrLQVLQNZUZn4Lp1eblzM2dDj_pxs6jaQYh2LdjEpBYhuPEu_geSIJ8672By5pZKf1kz7NSveTbZoXCPthGMgwnR4E3o8SEAFZ7IJ-qayBAORosek20FEs-5Pm8zdgmRRPMWM4heXZlu_YhKbU-DgvYKataQZMmgd7PXyrB3gPXhlzO2l7V0BbiD0znMdZFUV6Gd-bFqsA4pkZsTO9sTo2A8WxBSH6251zwzGjAIv0Xfynh0mNp1eM1pYR__r4sVru3Px9MUX");'
+                ></div>
+            </div>
+        </header>
+        <div class="px-40 flex flex-1 justify-center py-5">
+            <div class="layout-content-container flex flex-col max-w-[960px] flex-1">
+                <div class="flex flex-wrap justify-between gap-3 p-4">
+                    <p class="text-[#111518] tracking-light text-[32px] font-bold leading-tight min-w-72">Applications</p>
+                    <a th:href="@{/applications/new}"
+                       class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-8 px-4 bg-[#f0f2f5] text-[#111518] text-sm font-medium leading-normal"
+                    >
+                        <span class="truncate">Create New Application</span>
+                    </a>
+                </div>
+                <div class="px-4 py-3 @container">
+                    <div class="flex overflow-hidden rounded-xl border border-[#dbe1e6] bg-white">
+                        <table class="flex-1">
+                            <thead>
+                            <tr class="bg-white">
+                                <th class="table-e0b3a4e4-a134-4d88-b2fb-bc141b3bcbcc-column-120 px-4 py-3 text-left text-[#111518] w-[400px] text-sm font-medium leading-normal">
+                                    Application ID
+                                </th>
+                                <th class="table-e0b3a4e4-a134-4d88-b2fb-bc141b3bcbcc-column-240 px-4 py-3 text-left text-[#111518] w-[400px] text-sm font-medium leading-normal">
+                                    Applicant Name
+                                </th>
+                                <th class="table-e0b3a4e4-a134-4d88-b2fb-bc141b3bcbcc-column-360 px-4 py-3 text-left text-[#111518] w-[400px] text-sm font-medium leading-normal">Status</th>
+                                <th class="table-e0b3a4e4-a134-4d88-b2fb-bc141b3bcbcc-column-480 px-4 py-3 text-left text-[#111518] w-[400px] text-sm font-medium leading-normal">
+                                    Submitted Date
+                                </th>
+                                <th class="table-e0b3a4e4-a134-4d88-b2fb-bc141b3bcbcc-column-600 px-4 py-3 text-left text-[#111518] w-[400px] text-sm font-medium leading-normal">
+                                    Last Updated
+                                </th>
+                                <th
+                                        class="table-e0b3a4e4-a134-4d88-b2fb-bc141b3bcbcc-column-720 px-4 py-3 text-left text-[#111518] w-60 text-[#60768a] text-sm font-medium leading-normal"
+                                ></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="loanApp : ${loanApplications}" class="border-t border-t-[#dbe1e6]">
+                                <td class="table-e0b3a4e4-a134-4d88-b2fb-bc141b3bcbcc-column-120 h-[72px] px-4 py-2 w-[400px] text-[#111518] text-sm font-normal leading-normal" th:text="${loanApp.applicationId}">
+                                </td>
+                                <td class="table-e0b3a4e4-a134-4d88-b2fb-bc141b3bcbcc-column-240 h-[72px] px-4 py-2 w-[400px] text-[#60768a] text-sm font-normal leading-normal" th:text="${loanApp.legalBusinessName}">
+                                </td>
+                                <td class="table-e0b3a4e4-a134-4d88-b2fb-bc141b3bcbcc-column-360 h-[72px] px-4 py-2 w-[400px] text-[#60768a] text-sm font-normal leading-normal" th:text="${loanApp.status}">
+                                </td>
+                                <td class="table-e0b3a4e4-a134-4d88-b2fb-bc141b3bcbcc-column-480 h-[72px] px-4 py-2 w-[400px] text-[#60768a] text-sm font-normal leading-normal" th:text="${loanApp.submittedDate}">
+                                </td>
+                                <td class="table-e0b3a4e4-a134-4d88-b2fb-bc141b3bcbcc-column-600 h-[72px] px-4 py-2 w-[400px] text-[#60768a] text-sm font-normal leading-normal" th:text="${loanApp.lastUpdated}">
+                                </td>
+                                <td class="table-e0b3a4e4-a134-4d88-b2fb-bc141b3bcbcc-column-720 h-[72px] px-4 py-2 w-60 text-[#60768a] text-sm font-bold leading-normal tracking-[0.015em]">
+                                    <a href="#" th:href="@{/applications/{id}(id=${loanApp.id})}">View Details</a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <style>
+                        @container(max-width:120px){.table-e0b3a4e4-a134-4d88-b2fb-bc141b3bcbcc-column-120{display: none;}}
+              @container(max-width:240px){.table-e0b3a4e4-a134-4d88-b2fb-bc141b3bcbcc-column-240{display: none;}}
+              @container(max-width:360px){.table-e0b3a4e4-a134-4d88-b2fb-bc141b3bcbcc-column-360{display: none;}}
+              @container(max-width:480px){.table-e0b3a4e4-a134-4d88-b2fb-bc141b3bcbcc-column-480{display: none;}}
+              @container(max-width:600px){.table-e0b3a4e4-a134-4d88-b2fb-bc141b3bcbcc-column-600{display: none;}}
+              @container(max-width:720px){.table-e0b3a4e4-a134-4d88-b2fb-bc141b3bcbcc-column-720{display: none;}}
+                    </style>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+

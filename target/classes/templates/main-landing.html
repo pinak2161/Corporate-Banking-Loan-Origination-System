@@ -1,0 +1,110 @@
+
+<html xmlns-th="www.thymeleaf.org ">
+<head>
+<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="" />
+<link rel="stylesheet" as="style" onload="this.rel='stylesheet'"
+	href="https://fonts.googleapis.com/css2?display=swap&amp;family=Inter%3Awght%40400%3B500%3B700%3B900&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900" />
+
+<title>Stitch Design</title>
+<link rel="icon" type="image/x-icon" href="data:image/x-icon;base64," />
+
+<script
+	src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+</head>
+<body>
+	<div
+		class="relative flex size-full min-h-screen flex-col bg-white group/design-root overflow-x-hidden"
+		style='font-family: Inter, "Noto Sans", sans-serif;'>
+		<div class="layout-container flex h-full grow flex-col">
+			<header
+				class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#f0f3f4] px-10 py-3">
+				<div class="flex items-center gap-4 text-[#111518]">
+					<div class="size-4">
+						<svg viewBox="0 0 48 48" fill="none"
+							xmlns="http://www.w3.org/2000/svg">
+                <g clip-path="url(#clip0_6_319)">
+                  <path
+								d="M8.57829 8.57829C5.52816 11.6284 3.451 15.5145 2.60947 19.7452C1.76794 23.9758 2.19984 28.361 3.85056 32.3462C5.50128 36.3314 8.29667 39.7376 11.8832 42.134C15.4698 44.5305 19.6865 45.8096 24 45.8096C28.3135 45.8096 32.5302 44.5305 36.1168 42.134C39.7033 39.7375 42.4987 36.3314 44.1494 32.3462C45.8002 28.361 46.2321 23.9758 45.3905 19.7452C44.549 15.5145 42.4718 11.6284 39.4217 8.57829L24 24L8.57829 8.57829Z"
+								fill="currentColor"></path>
+                </g>
+                <defs>
+                  <clipPath id="clip0_6_319">
+							<rect width="48" height="48" fill="white"></rect></clipPath>
+                </defs>
+              </svg>
+					</div>
+					<h2
+						class="text-[#111518] text-lg font-bold leading-tight tracking-[-0.015em]">FinanceCo</h2>
+				</div>
+				<div class="flex flex-1 justify-end gap-8">
+					<div class="flex items-center gap-9">
+						<a class="text-[#111518] text-sm font-medium leading-normal"
+							href="#">Products</a> <a
+							class="text-[#111518] text-sm font-medium leading-normal"
+							href="#">Solutions</a> <a
+							class="text-[#111518] text-sm font-medium leading-normal"
+							href="#">Resources</a> <a
+							class="text-[#111518] text-sm font-medium leading-normal"
+							href="#">About Us</a>
+					</div>
+					<div class="flex gap-2">
+						<a href="/login"
+							class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 px-4 bg-[#128ee7] text-white text-sm font-bold leading-normal tracking-[0.015em]">
+							<span class="truncate">Log In</span>
+						</a> <a href="/registration"
+							class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 px-4 bg-[#f0f3f4] text-[#111518] text-sm font-bold leading-normal tracking-[0.015em]">
+							<span class="truncate">Sign Up</span>
+						</a>
+					</div>
+				</div>
+			</header>
+			<div class="px-40 flex flex-1 justify-center py-5">
+				<div
+					class="layout-content-container flex flex-col max-w-[960px] flex-1">
+					<div class="@container">
+						<div class="@[480px]:p-4">
+							<div
+								class="flex min-h-[480px] flex-col gap-6 bg-cover bg-center bg-no-repeat @[480px]:gap-8 @[480px]:rounded-xl items-start justify-end px-4 pb-10 @[480px]:px-10"
+								style='background-image: linear-gradient(rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.4) 100%), url("https://lh3.googleusercontent.com/aida-public/AB6AXuApsabkZTcIOVPmiPmJEpw0VLZOUO-XhBoZO3hh9wnKPZSI0qtDoNEeB1S56d0WrTO3R8ROvDbY1SQU-_xc6aiXOslyNczOMl0ML_EwvSCzG5bcts30KZ_V48Qy2lcJ8JEkSXiboaaABRUy3xaMD7QsI4W08r6jHvxZYYabGyHaRTni44R8zHiW_9Ss3WRNrG6nL7T-lRGQxUzDzMvPaGEv1Qs1lfBgKNanorJ3p4_CFUXDiBH58gU1GIkrtGyWcsl1GTQ5YvlKU2Z-");'>
+								<div class="flex flex-col gap-2 text-left">
+									<h1
+										class="text-white text-4xl font-black leading-tight tracking-[-0.033em] @[480px]:text-5xl @[480px]:font-black @[480px]:leading-tight @[480px]:tracking-[-0.033em]">
+										Streamline Your Corporate Lending</h1>
+									<h2
+										class="text-white text-sm font-normal leading-normal @[480px]:text-base @[480px]:font-normal @[480px]:leading-normal">
+										FinanceCo's Loan Origination System empowers your institution
+										to efficiently manage the entire loan lifecycle, from
+										application to closing.</h2>
+								</div>
+								<button
+									class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 px-4 @[480px]:h-12 @[480px]:px-5 bg-[#128ee7] text-white text-sm font-bold leading-normal tracking-[0.015em] @[480px]:text-base @[480px]:font-bold @[480px]:leading-normal @[480px]:tracking-[0.015em]">
+									<span class="truncate">Get Started</span>
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<footer class="flex justify-center">
+				<div class="flex max-w-[960px] flex-1 flex-col">
+					<footer
+						class="flex flex-col gap-6 px-5 py-10 text-center @container">
+						<div
+							class="flex flex-wrap items-center justify-center gap-6 @[480px]:flex-row @[480px]:justify-around">
+							<a
+								class="text-[#617989] text-base font-normal leading-normal min-w-40"
+								href="#">Privacy Policy</a> <a
+								class="text-[#617989] text-base font-normal leading-normal min-w-40"
+								href="#">Terms of Service</a> <a
+								class="text-[#617989] text-base font-normal leading-normal min-w-40"
+								href="#">Contact Us</a>
+						</div>
+						<p class="text-[#617989] text-base font-normal leading-normal">©️
+							2024 FinanceCo. All rights reserved.</p>
+					</footer>
+				</div>
+			</footer>
+		</div>
+	</div>
+</body>
+</html>
