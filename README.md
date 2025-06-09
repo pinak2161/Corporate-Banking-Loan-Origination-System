@@ -74,7 +74,7 @@ Follow these instructions to get a copy of the project up and running on your lo
 
 ### 1. Clone the Repository
 
-Open your terminal or command prompt and navigate to the directory where you want to store your project.
+Open your terminal or command prompt and navigate to the directory where you want to store  project.
 
 ```bash
 git clone https://github.com/pinak2161/Corporate-Banking-Loan-Origination-System
