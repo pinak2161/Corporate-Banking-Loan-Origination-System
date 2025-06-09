@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="" />
+    <link rel="stylesheet" as="style" onload="this.rel='stylesheet'"
+        href="https://fonts.googleapis.com/css2?display=swap&family=Inter%3Awght%40400%3B500%3B700%3B900&family=Noto+Sans%3Awght%40400%3B500%3B700%3B900" />
+
+    <title>Alliances Fintech - Your Financial Partner</title>
+    <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64," />
+
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <style>
+        /* Custom styles for subtle aesthetic beyond basic Tailwind utilities */
+        body {
+            background-color: #F8F9FA; /* Very light subtle gray/off-white background */
+            color: #34495E; /* Dark blue-gray for default text */
+            scroll-behavior: smooth; /* Smooth scrolling for anchor links */
+        }
+        .text-primary-dark {
+            color: #2C3E50; /* A darker blue-gray for main headings */
+        }
+        .bg-accent-blue {
+            background-color: #3498DB; /* A standard blue for primary actions */
+        }
+        .text-accent-blue {
+            color: #3498DB; /* A standard blue for links/accents */
+        }
+        .border-subtle {
+            border-color: #EBF5FB; /* A very light blue border */
+        }
+        .shadow-subtle {
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); /* Lighter shadow */
+        }
+        .section-padding {
+            padding: 80px 0; /* Consistent padding for sections */
+        }
+        .section-heading {
+            font-size: 2.5rem; /* Large heading for sections */
+            font-weight: 700; /* Bold */
+            color: #2C3E50; /* Dark blue-gray */
+            margin-bottom: 40px;
+            text-align: center;
+        }
+        .text-blue-subtle {
+            color: #60A5FA; /* A slightly lighter blue for secondary text */
+        }
+
+        /* Essential for smooth scrolling with fixed header */
+        section[id] {
+            scroll-margin-top: 80px; /* Adjust this value based on your fixed header's height + desired buffer */
+        }
+        /* Styles for the modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000; /* Above everything else */
+        }
+        .modal-content {
+            background-color: #ffffff;
+            padding: 2.5rem; /* Increased padding */
+            border-radius: 0.75rem; /* Rounded corners */
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15); /* More pronounced shadow */
+            max-width: 800px; /* Wider modal */
+            width: 90%;
+            max-height: 90%;
+            overflow-y: auto; /* Scrollable content */
+            position: relative; /* For absolute positioning of close button */
+        }
+        .modal-close-button {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #718096; /* Gray color */
+            padding: 0.5rem;
+            border-radius: 50%; /* Circular button */
+            transition: background-color 0.2s ease;
+        }
+        .modal-close-button:hover {
+            background-color: #edf2f7; /* Light gray on hover */
+        }
+        .modal-title {
+            font-size: 2rem; /* Larger title */
+            font-weight: 700;
+            color: #2C3E50;
+            margin-bottom: 1.5rem; /* More space below title */
+            border-bottom: 1px solid #EBF5FB; /* Subtle separator */
+            padding-bottom: 1rem;
+        }
+        .modal-body p {
+            margin-bottom: 1rem; /* Space between paragraphs */
+            line-height: 1.75; /* Better readability */
+            color: #4a5568; /* Slightly darker text */
+        }
+        .modal-body ul {
+            list-style-type: disc;
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+            color: #4a5568;
+        }
+        .modal-body h4 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #3498DB;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="relative flex size-full min-h-screen flex-col bg-[#F8F9FA] group/design-root overflow-x-hidden"
+        style='font-family: Inter, "Noto Sans", sans-serif;'>
+        <div class="layout-container flex h-full grow flex-col">
+            <header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-blue-100 px-10 py-3 bg-white shadow-subtle fixed w-full z-10 top-0">
+                <div class="flex items-center gap-4 text-primary-dark">
+                    <div class="size-4">
+                        <svg viewBox="0 0 48 48" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <g clip-path="url(#clip0_6_319)">
+                                <path
+                                    d="M8.57829 8.57829C5.52816 11.6284 3.451 15.5145 2.60947 19.7452C1.76794 23.9758 2.19984 28.361 3.85056 32.3462C5.50128 36.3314 8.29667 39.7376 11.8832 42.134C15.4698 44.5305 19.6865 45.8096 24 45.8096C28.3135 45.8096 32.5302 44.5305 36.1168 42.134C39.7033 39.7375 42.4987 36.3314 44.1494 32.3462C45.8002 28.361 46.2321 23.9758 45.3905 19.7452C44.549 15.5145 42.4718 11.6284 39.4217 8.57829L24 24L8.57829 8.57829Z"
+                                    fill="currentColor"></path>
+                            </g>
+                            <defs>
+                                <clipPath id="clip0_6_319">
+                                    <rect width="48" height="48" fill="white"></rect>
+                                </clipPath>
+                            </defs>
+                        </svg>
+                    </div>
+                    <a href="/" class="text-primary-dark text-lg font-bold leading-tight tracking-[-0.015em] hover:text-accent-blue transition-colors">Alliances Fintech</a>
+                </div>
+                <div class="flex flex-1 justify-end gap-8">
+                    <div class="flex items-center gap-9">
+                        <a class="text-gray-700 hover:text-accent-blue text-sm font-medium leading-normal" href="#products">Products</a>
+                        <a class="text-gray-700 hover:text-accent-blue text-sm font-medium leading-normal" href="#solutions">Solutions</a>
+                        <a class="text-gray-700 hover:text-accent-blue text-sm font-medium leading-normal" href="#resources-section">Resources</a>
+                        <a class="text-gray-700 hover:text-accent-blue text-sm font-medium leading-normal" href="#about-us">About Us</a>
+                    </div>
+                    <div class="flex gap-2">
+                        <a href="/login"
+                            class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 px-4 bg-accent-blue text-white text-sm font-bold leading-normal tracking-[0.015em] hover:bg-blue-700">
+                            <span class="truncate">Log In</span>
+                        </a>
+                        <a href="/signup"
+                            class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 px-4 bg-blue-100 text-primary-dark text-sm font-bold leading-normal tracking-[0.015em] hover:bg-blue-200">
+                            <span class="truncate">Sign Up</span>
+                        </a>
+                    </div>
+                </div>
+            </header>
+
+            <main class="flex flex-1 flex-col pt-[72px]"> <div class="px-40 flex flex-1 justify-center py-5">
+                    <div class="layout-content-container flex flex-col max-w-[960px] flex-1">
+                        <div class="@container">
+                            <div class="@[480px]:p-4">
+                                <div
+                                    class="flex min-h-[480px] flex-col gap-6 bg-cover bg-center bg-no-repeat @[480px]:gap-8 @[480px]:rounded-xl items-start justify-end px-4 pb-10 @[480px]:px-10"
+                                    style='background-image: linear-gradient(rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.5) 100%), url("https://lh3.googleusercontent.com/aida-public/AB6AXuApsabkZTcIOVPmiPmJEpw0VLZOUO-XhBoZO3hh9wnKPZSI0qtDoNEeB1S56d0WrTO3R8ROvDbY1SQU-_xc6aiXOslyNczOMl0ML_EwvSCzG5bcts30KZ_V48Qy2lcJ8JEkSXiboaaABRUy3xaMD7QsI4W08r6jHvxZYYabGyHaRTni44R8zHiW_9Ss3WRNrG6nL7T-lRGQxUzDzMvPaGEv1Qs1lfBgKNanorJ3p4_CFUXDiBH58gU1GIkrtGyWcsl1GTQ5YvlKU2Z-");'>
+                                    <div class="flex flex-col gap-2 text-left">
+                                        <h1
+                                            class="text-white text-4xl font-black leading-tight tracking-[-0.033em] @[480px]:text-5xl @[480px]:font-black @[480px]:leading-tight @[480px]:tracking-[-0.033em]">
+                                            Streamline Your Corporate Lending</h1>
+                                        <h2
+                                            class="text-white text-sm font-normal leading-normal @[480px]:text-base @[480px]:font-normal @[480px]:leading-normal">
+                                            Alliances Fintech's Loan Origination System empowers your institution
+                                            to efficiently manage the entire loan lifecycle, from
+                                            application to closing.</h2>
+                                    </div>
+                                    <a th:href="@{/login}"
+                                        class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 px-4 @[480px]:h-12 @[480px]:px-5 bg-accent-blue text-white text-sm font-bold leading-normal tracking-[0.015em] @[480px]:text-base @[480px]:font-bold @[480px]:leading-normal @[480px]:tracking-[0.015em] hover:bg-blue-700">
+                                        <span class="truncate">Get Started</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <section id="products" class="section-padding bg-white shadow-subtle rounded-xl my-8">
+                            <h2 class="section-heading">Our Products</h2>
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 px-8">
+                                <div class="p-6 border border-blue-100 rounded-lg text-center">
+                                    <h3 class="text-xl font-semibold text-accent-blue mb-2">Corporate Loans</h3>
+                                    <p class="text-gray-700">Tailored loan solutions for businesses of all sizes, ensuring growth and stability.</p>
+                                </div>
+                                <div class="p-6 border border-blue-100 rounded-lg text-center">
+                                    <h3 class="text-xl font-semibold text-accent-blue mb-2">SME Financing</h3>
+                                    <p class="text-gray-700">Dedicated funding options for Small and Medium Enterprises to boost their ventures.</p>
+                                </div>
+                                <div class="p-6 border border-blue-100 rounded-lg text-center">
+                                    <h3 class="text-xl font-semibold text-accent-blue mb-2">Trade Finance</h3>
+                                    <p class="text-gray-700">Facilitating international trade with robust and flexible financial instruments.</p>
+                                </div>
+                            </div>
+                        </section>
+
+                        <section id="solutions" class="section-padding bg-blue-50 rounded-xl my-8">
+                            <h2 class="section-heading">Our Solutions</h2>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 px-8">
+                                <div class="p-6 bg-white rounded-lg shadow-subtle">
+                                    <h3 class="text-xl font-semibold text-primary-dark mb-2">Automated Origination</h3>
+                                    <p class="text-gray-700">Our system automates the loan origination process, reducing manual errors and speeding up approvals.</p>
+                                </div>
+                                <div class="p-6 bg-white rounded-lg shadow-subtle">
+                                    <h3 class="text-xl font-semibold text-primary-dark mb-2">Risk Assessment Tools</h3>
+                                    <p class="text-gray-700">Advanced AI-driven tools for comprehensive credit evaluation and risk mitigation.</p>
+                                </div>
+                                <div class="p-6 bg-white rounded-lg shadow-subtle">
+                                    <h3 class="text-xl font-semibold text-primary-dark mb-2">Compliance Management</h3>
+                                    <p class="text-gray-700">Ensure regulatory adherence with built-in compliance checks and audit trails.</p>
+                                </div>
+                                <div class="p-6 bg-white rounded-lg shadow-subtle">
+                                    <h3 class="text-xl font-semibold text-primary-dark mb-2">Seamless Integration</h3>
+                                    <p class="text-gray-700">Integrate effortlessly with your existing banking systems and third-party services.</p>
+                                </div>
+                            </div>
+                        </section>
+
+                        <section id="resources-section" class="section-padding bg-white shadow-subtle rounded-xl my-8">
+                            <h2 class="section-heading">Resources</h2>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 px-8 mb-12">
+                                <a href="#loan-guides" class="block p-6 border border-blue-100 rounded-lg text-center hover:bg-blue-50 transition-colors">
+                                    <h3 class="text-lg font-semibold text-accent-blue mb-2">Loan Guides</h3>
+                                    <p class="text-gray-700">In-depth guides to understanding various loan products.</p>
+                                </a>
+                                <a href="#faq-section" class="block p-6 border border-blue-100 rounded-lg text-center hover:bg-blue-50 transition-colors">
+                                    <h3 class="text-lg font-semibold text-accent-blue mb-2">FAQ</h3>
+                                    <p class="text-gray-700">Answers to commonly asked questions about our services.</p>
+                                </a>
+                                <a href="#blog-section" class="block p-6 border border-blue-100 rounded-lg text-center hover:bg-blue-50 transition-colors">
+                                    <h3 class="text-lg font-semibold text-accent-blue mb-2">Blog</h3>
+                                    <p class="text-gray-700">Latest insights on fintech trends and corporate lending.</p>
+                                </a>
+                            </div>
+
+                            <section id="loan-guides" class="px-8 py-10 bg-blue-50 rounded-xl my-8">
+                                <h3 class="text-2xl font-semibold text-primary-dark mb-6 text-center">In-depth Loan Guides</h3>
+                                <div class="max-w-2xl mx-auto text-gray-700">
+                                    <p class="mb-4">Explore our comprehensive guides to various loan products designed for corporate clients and SMEs. Whether you're seeking to understand the intricacies of working capital loans or the benefits of term loans, our resources provide clear, actionable insights.</p>
+                                    <h4 class="text-xl font-medium text-accent-blue mb-2">Types of Corporate Loans:</h4>
+                                    <ul class="list-disc list-inside mb-4 ml-4">
+                                        <li>Working Capital Loans: Short-term funding for daily operations.</li>
+                                        <li>Term Loans: Financing for long-term investments with fixed repayment schedules.</li>
+                                        <li>Asset-Backed Loans: Loans secured by specific assets of the business.</li>
+                                        <li>Trade Finance: Facilitating international trade transactions.</li>
+                                    </ul>
+                                    <p class="mb-4">Each guide covers eligibility criteria, application processes, and repayment structures, helping you make informed financial decisions for your business.</p>
+                                </div>
+                            </section>
+
+                            <section id="faq-section" class="px-8 py-10 bg-white rounded-xl my-8 shadow-subtle">
+                                <h3 class="text-2xl font-semibold text-primary-dark mb-6 text-center">Frequently Asked Questions</h3>
+                                <div class="max-w-2xl mx-auto text-gray-700 space-y-6">
+                                    <div>
+                                        <h4 class="text-xl font-medium text-accent-blue mb-2">Q: How do I apply for a loan through Alliances Fintech?</h4>
+                                        <p>A: Our intuitive Loan Origination System allows you to submit your application online. Simply navigate to the "Apply for Loan" section after logging in and follow the step-by-step instructions.</p>
+                                    </div>
+                                    <div>
+                                        <h4 class="text-xl font-medium text-accent-blue mb-2">Q: What is the typical processing time for a loan application?</h4>
+                                        <p>A: Thanks to our automated credit evaluation and document validation processes, we significantly reduce processing times. While it varies by loan type and completeness of documentation, many applications receive initial approval within 24-48 hours.</p>
+                                    </div>
+                                    <div>
+                                        <h4 class="text-xl font-medium text-accent-blue mb-2">Q: Is my financial data secure with Alliances Fintech?</h4>
+                                        <p>A: Absolutely. We employ industry-leading encryption and security protocols to protect all your sensitive financial information. Our systems are regularly audited to ensure compliance with global data protection standards.</p>
+                                    </div>
+                                    <div>
+                                        <h4 class="text-xl font-medium text-accent-blue mb-2">Q: Can I track the status of my loan application?</h4>
+                                        <p>A: Yes, once you've submitted your application, you can log into your dashboard at any time to view its real-time status, including document validation, credit evaluation, and approval progress.</p>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <section id="blog-section" class="px-8 py-10 bg-blue-50 rounded-xl my-8">
+                                <h3 class="text-2xl font-semibold text-primary-dark mb-6 text-center">Latest Insights from Our Blog</h3>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                                    <div class="p-6 bg-white rounded-lg shadow-subtle">
+                                        <h4 class="text-xl font-semibold text-accent-blue mb-2">The Future of Digital Lending: Trends to Watch</h4>
+                                        <p class="text-gray-700 text-sm mb-3">May 28, 2025 | Fintech Trends</p>
+                                        <p class="text-gray-700">Explore how AI, blockchain, and advanced analytics are shaping the next generation of loan origination and risk management. Stay ahead of the curve with our expert analysis.</p>
+                                        <a href="#" class="text-blue-600 hover:underline mt-3 inline-block">Read More →</a>
+                                    </div>
+                                    <div class="p-6 bg-white rounded-lg shadow-subtle">
+                                        <h4 class="text-xl font-semibold text-accent-blue mb-2">Optimizing SME Financing: A Guide for Lenders</h4>
+                                        <p class="text-gray-700 text-sm mb-3">May 15, 2025 | SME Loans</p>
+                                        <p class="text-700">Understand the unique challenges and opportunities in Small and Medium Enterprise (SME) lending and how our solutions can help you serve this vital market segment more effectively.</p>
+                                        <a href="#" class="text-blue-600 hover:underline mt-3 inline-block">Read More →</a>
+                                    </div>
+                                </div>
+                            </section>
+
+                        </section> <section id="about-us" class="section-padding bg-blue-50 rounded-xl my-8">
+                            <h2 class="section-heading">About Alliances Fintech</h2>
+                            <div class="px-8 text-center max-w-3xl mx-auto">
+                                <p class="text-gray-700 mb-6 text-lg leading-relaxed">
+                                    At <strong>Alliances Fintech</strong>, we are at the forefront of <strong>revolutionizing corporate lending</strong> through cutting-edge technology and unparalleled expertise. Our mission is to empower financial institutions with robust, efficient, and compliant loan origination systems that drive growth and operational excellence.
+                                </p>
+                                <p class="text-gray-700 mb-6 text-lg leading-relaxed">
+                                    Our flagship <strong>Loan Origination System (LOS)</strong> is built on a foundation of secure, scalable, and user-friendly architecture. It automates critical processes from application to disbursement, provides <strong>advanced credit evaluation tools</strong>, and ensures full regulatory compliance. We empower banks and credit unions to manage their loan portfolios with greater efficiency and transparency.
+                                </p>
+                                <p class="text-gray-700 mb-6 text-lg leading-relaxed">
+                                    Alliances Fintech prides itself on its <strong>client-centric approach</strong>, continuous innovation, and a team of seasoned professionals passionate about finance and technology. We are committed to being your trusted partner, helping you navigate the evolving digital landscape with confidence and achieve superior financial outcomes.
+                                </p>
+                                <a href="#" class="inline-block bg-accent-blue text-white px-6 py-3 rounded-full font-bold hover:bg-blue-700 transition-colors mt-4">Discover Our Story</a>
+                            </div>
+                        </section>
+
+                    </div>
+                </div>
+            </main>
+
+            <footer class="flex justify-center">
+                <div class="flex max-w-[960px] flex-1 flex-col">
+                    <footer
+                        class="flex flex-col gap-6 px-5 py-10 text-center @container bg-blue-50 border-t border-solid border-t-blue-100">
+                        <div
+                            class="flex flex-wrap items-center justify-center gap-6 @[480px]:flex-row @[480px]:justify-around">
+                            <a class="text-blue-700 hover:text-blue-900 text-base font-normal leading-normal min-w-40 modal-trigger" href="#" data-modal-target="privacyPolicyModal">Privacy Policy</a>
+                            <a class="text-blue-700 hover:text-blue-900 text-base font-normal leading-normal min-w-40 modal-trigger" href="#" data-modal-target="termsOfServiceModal">Terms of Service</a>
+                            <a class="text-blue-700 hover:text-blue-900 text-base font-normal leading-normal min-w-40 modal-trigger" href="#" data-modal-target="contactUsModal">Contact Us</a>
+                        </div>
+                        <p class="text-gray-600 text-base font-normal leading-normal">©️
+                            <span th:text="${#dates.format(#dates.createNow(), 'yyyy')}">2024</span> Alliances Fintech. All rights reserved.</p>
+                    </footer>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <div id="genericModal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <button class="modal-close-button" onclick="closeModal()">×</button>
+            <h3 id="modalTitle" class="modal-title"></h3>
+            <div id="modalBody" class="modal-body text-gray-700 text-base">
+                </div>
+        </div>
+    </div>
+
+    <div id="privacyPolicyModalContent" class="hidden">
+        <h4>Privacy Policy</h4>
+        <p>Your privacy is important to us. This policy explains how we collect, use, and protect your personal data when you use Alliances Fintech services.</p>
+        <p><strong>1. Information We Collect:</strong> We collect information you provide directly to us, such as your name, email address, financial details, and other information necessary for loan applications and services. We also collect usage data, including IP addresses, browser types, and access times.</p>
+        <p><strong>2. How We Use Your Information:</strong> We use your information to process loan applications, provide customer support, improve our services, and ensure compliance with legal and regulatory requirements. We may also use it for internal analytics and to personalize your experience.</p>
+        <p><strong>3. Data Security:</strong> We implement robust security measures, including encryption and access controls, to protect your personal data from unauthorized access, alteration, disclosure, or destruction.</p>
+        <p><strong>4. Sharing Your Information:</strong> We do not sell your personal data. We may share your information with trusted third-party partners (e.g., credit bureaus, payment processors) only when necessary to provide our services and with your explicit consent or as required by law.</p>
+        <p><strong>5. Your Rights:</strong> You have the right to access, correct, or delete your personal data. You can also object to or restrict certain processing activities. Please contact us to exercise these rights.</p>
+        <p>By using our services, you agree to the terms of this Privacy Policy. We may update this policy periodically, and we encourage you to review it regularly.</p>
+    </div>
+
+    <div id="termsOfServiceModalContent" class="hidden">
+        <h4>Terms of Service</h4>
+        <p>Welcome to Alliances Fintech. By accessing or using our services, you agree to be bound by these Terms of Service. Please read them carefully.</p>
+        <p><strong>1. Acceptance of Terms:</strong> These Terms constitute a legally binding agreement between you and Alliances Fintech regarding your use of our Loan Origination System and related services.</p>
+        <p><strong>2. User Obligations:</strong> You agree to provide accurate and complete information during registration and loan applications. You are responsible for maintaining the confidentiality of your account credentials and for all activities that occur under your account.</p>
+        <p><strong>3. Use of Services:</strong> Our services are provided for lawful purposes only. You agree not to use our services for any illegal or unauthorized activities, including fraud, money laundering, or infringement of intellectual property rights.</p>
+        <p><strong>4. Intellectual Property:</strong> All content, features, and functionality on our platform, including software, text, graphics, logos, and trademarks, are the exclusive property of Alliances Fintech and are protected by intellectual property laws.</p>
+        <p><strong>5. Limitation of Liability:</strong> Alliances Fintech shall not be liable for any direct, indirect, incidental, special, consequential, or punitive damages arising out of your use of or inability to use our services.</p>
+        <p><strong>6. Termination:</strong> We reserve the right to suspend or terminate your access to our services at our sole discretion, without prior notice, for any violation of these Terms or for any other reason.</p>
+        <p><strong>7. Governing Law:</strong> These Terms shall be governed by and construed in accordance with the laws of India, without regard to its conflict of law principles.</p>
+        <p>We may modify these Terms at any time. Your continued use of our services after any such changes constitutes your acceptance of the new Terms.</p>
+    </div>
+
+    <div id="contactUsModalContent" class="hidden">
+        <h4>Contact Us</h4>
+        <p>We're here to help! If you have any questions, feedback, or require assistance, please don't hesitate to reach out to us.</p>
+        <p><strong>Email:</strong> <a href="mailto:support@alliancesfintech.com" class="text-accent-blue hover:underline">support@alliancesfintech.com</a></p>
+        <p><strong>Phone:</strong> +91-8767130467</p>
+        <p><strong>Address:</strong><br>
+           Alliances Fintech Headquarters<br>
+           123 ECR District Road<br>
+          Siruseri, Chennai, Tamil Nadu, 600001<br>
+           India</p>
+        <p>Our support team is available Monday to Friday, 9:00 AM to 6:00 PM IST.</p>
+    </div>
+
+    <script>
+        // Get references to the modal elements
+        const genericModal = document.getElementById('genericModal');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalBody = document.getElementById('modalBody');
+        const modalCloseButton = document.querySelector('.modal-close-button');
+
+        // Function to open the modal
+        function openModal(title, contentHtml) {
+            modalTitle.innerHTML = title;
+            modalBody.innerHTML = contentHtml; // Inject HTML content
+            genericModal.classList.remove('hidden');
+            genericModal.classList.add('flex'); // Show with flex to center content
+            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        }
+
+        // Function to close the modal
+        function closeModal() {
+            genericModal.classList.add('hidden');
+            genericModal.classList.remove('flex');
+            document.body.style.overflow = ''; // Restore background scrolling
+            modalTitle.innerHTML = '';
+            modalBody.innerHTML = ''; // Clear content
+        }
+
+        // Add event listeners to the footer links
+        document.addEventListener('DOMContentLoaded', () => {
+            const modalTriggers = document.querySelectorAll('.modal-trigger');
+
+            modalTriggers.forEach(trigger => {
+                trigger.addEventListener('click', (event) => {
+                    event.preventDefault(); // Prevent default link behavior
+
+                    const targetId = trigger.getAttribute('data-modal-target');
+                    const contentDiv = document.getElementById(targetId + 'Content'); // Get the hidden content div
+                    
+                    if (contentDiv) {
+                        // Extract content, the first h4 is the title, rest is body
+                        const contentTitle = contentDiv.querySelector('h4') ? contentDiv.querySelector('h4').outerHTML : '';
+                        const contentBody = Array.from(contentDiv.children).filter(child => child.tagName.toLowerCase() !== 'h4').map(child => child.outerHTML).join('');
+                        
+                        openModal(contentTitle, contentBody);
+                    }
+                });
+            });
+
+            // Close modal when clicking outside the content (on the overlay)
+            genericModal.addEventListener('click', (event) => {
+                if (event.target === genericModal) {
+                    closeModal();
+                }
+            });
+
+            // Close modal with Escape key
+            document.addEventListener('keydown', (event) => {
+                if (event.key === 'Escape' && !genericModal.classList.contains('hidden')) {
+                    closeModal();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

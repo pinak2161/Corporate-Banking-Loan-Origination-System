@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loan Application Submission</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        html, body {
+            /* Background: Sky Blue (#87CEEB) to Carolina Blue (#A2C8E6) gradient */
+            background: linear-gradient(to right, rgba(135, 206, 235, 0.7), rgba(162, 200, 230, 0.8));
+            font-family: 'Arial', sans-serif;
+            height: 100%;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center; /* Center content horizontally */
+            gap: 40px; /* Space between image and form */
+        }
+
+        /* Image container */
+        .image-container {
+            flex-shrink: 0; /* Prevent shrinking */
+            display: flex;
+            justify-content: center; /* Center image within its container */
+            align-items: center;
+            /* Removed fixed padding-left */
+            max-width: 580px; /* Control max width of the image container */
+            width: 45%; /* Proportionally take space */
+        }
+
+        /* Image scaling */
+        .image-container img {
+            width: 80%; /* Make image fill its container */
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0px 4px 10px rgba(0,0,0,0.3);
+        }
+
+        /* Loan form */
+        .container {
+            max-width: 500px;
+            background: rgba(255,255,255,0.95);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0px 4px 10px rgba(0,0,0,0.3);
+            animation: fadeIn 1s ease-in;
+            /* Removed fixed margin-right */
+            flex-shrink: 0; /* Prevent shrinking */
+            width: 45%; /* Proportionally take space */
+        }
+
+        /* Heading Style */
+        h3 {
+            color: #000080; /* Navy Blue */
+            margin-bottom: 20px; /* Adjusted margin-bottom */
+            font-weight: bold; /* Added bold font weight */
+            text-align: center; /* Centered heading */
+        }
+
+        /* Form Control Styling */
+        .form-control {
+            border-color: #B0E0E6; /* Powder Blue border */
+        }
+
+        .form-control:focus {
+            border-color: #000080; /* Navy Blue border on focus */
+            box-shadow: 0 0 0 0.25rem rgba(0, 0, 128, 0.25); /* Navy Blue focus ring */
+        }
+
+        /* Button Styling */
+        .btn-primary {
+            background: #000080; /* Navy Blue */
+            border: none;
+            width: 100%;
+            padding: 12px;
+            font-size: 18px;
+            border-radius: 10px;
+            transition: 0.3s;
+            color: white; /* Ensure text is white */
+            font-weight: bold; /* Make button text bold */
+            cursor: pointer; /* Add pointer cursor */
+        }
+
+        .btn-primary:hover {
+            background:#4682B4; /* Steel Blue for hover */
+            transform: scale(1.05);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0px); }
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 992px) {
+            html, body {
+                flex-direction: column; /* Stack image and form vertically */
+                justify-content: flex-start; /* Align content from top */
+                padding: 20px 0; /* Add vertical padding */
+                gap: 20px; /* Reduce gap when stacked */
+            }
+            .image-container, .container {
+                width: 90%; /* Adjust width for smaller screens */
+                max-width: 500px; /* Limit max width */
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="image-container">
+    <img th:src="@{/image.jpg}" alt="Loan Image">
+</div>
+
+<div class="container">
+
+    <h3>APPLY FOR YOUR LOAN</h3>
+
+    <form th:action="@{/loan-applications/submit}" th:object="${loanApplication}" method="post">
+        <div class="mb-3">
+            <input type="text" class="form-control" id="companyName" th:field="*{companyName}" placeholder="Company Name" required>
+        </div>
+        <div class="mb-3">
+            <select class="form-control" id="loanType" th:field="*{loanType}">
+                <option value="" disabled selected>Select loan type</option>
+                <option th:value="'Business Loan'">Business Loan</option>
+                <option th:value="'Equipment Loan'">Equipment Loan</option>
+                <option th:value="'Working Capital Loan'">Working Capital Loan</option>
+                <option th:value="'Government Loan'">Government Loan</option>
+                <option th:value="'Term Loan'">Term Loan</option>
+                <option th:value="'Merchant Cash Advance'">Merchant Cash Advance</option>
+                <option th:value="'Invoice Financing'">Invoice Financing</option>
+                <option th:value="'Real Estate Loan'">Real Estate Loan</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <input type="number" class="form-control" id="loanAmount" th:field="*{loanAmount}" placeholder="Loan Amount" required>
+        </div>
+        <div class="mb-3">
+            <input type="number" class="form-control" id="newCreditAccounts" th:field="*{NewCreditAccounts}" placeholder="New Credit Accounts" required>
+        </div>
+        <div class="mb-3">
+            <input type="number" step="0.01" class="form-control" id="monthlyIncome" th:field="*{MonthlyIncome}" placeholder="Monthly Income" required>
+        </div>
+        <div class="mb-3">
+            <input type="number" step="0.01" class="form-control" id="monthlyLoanRepaymentAmount" th:field="*{MonthlyLoanRepaymentAmount}" placeholder="Monthly Loan Repayment Amount" required>
+        </div>
+        <div class="mb-3">
+            <input type="number" class="form-control" id="numberOfPastDefaults" th:field="*{NumberOfPastDefaults}" placeholder="Number of Past Defaults" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit Application</button>
+    </form>
+</div>
+
+</body>
+</html>

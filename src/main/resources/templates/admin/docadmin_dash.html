@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doc Admin Dashboard - Alliances Fintech</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <style>
+        /* Your existing CSS for a consistent look */
+
+        /* Smooth Scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* General Body Styling */
+        body {
+            background: linear-gradient(to right, rgba(173, 216, 230, 0.7), rgba(100, 149, 237, 0.8)); /* Light to Medium Blue Gradient */
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            color: #333; /* Default text color */
+        }
+
+        /* Header Styling (Top Navigation Bar) */
+        header {
+            background: linear-gradient(to right, rgb(0, 70, 150), rgba(0, 123, 255, 1)); /* Darker Blue Header */
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 30px;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.3);
+            z-index: 1000; /* Ensure header is on top */
+            position: sticky; /* Make header sticky */
+            top: 0;
+        }
+        header h1 {
+            margin: 0;
+            color: white;
+            font-family: 'Arial', Helvetica;
+            font-weight: bolder;
+            font-style: italic;
+            font-size: 1.8rem;
+        }
+        header h5 {
+            color: white;
+            margin-left: 15px;
+            font-size: 1.1rem;
+        }
+        .nav-link-top {
+            color: white;
+            text-decoration: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            font-size: 1rem;
+            margin-left: 10px;
+        }
+        .nav-link-top:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+        .logout-link {
+            color: white;
+            text-decoration: none;
+            font-size: 1rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            margin-left: 20px;
+        }
+        .logout-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Main Content Wrapper */
+        .content-wrapper {
+            flex-grow: 1;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 20px auto;
+            background: rgba(255, 255, 255, 0.95); /* Slightly transparent white for content */
+            border-radius: 15px;
+            box-shadow: 0px 4px 15px rgba(0,0,0,0.2);
+        }
+
+        /* Section Styling */
+        .section-card {
+            margin-bottom: 30px;
+            padding: 25px;
+            border-radius: 12px;
+            background: rgba(240, 248, 255, 0.8); /* AliceBlue background for sections */
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .section-card h2, .section-card h3 {
+            color: rgba(0, 70, 150, 1); /* Dark Blue Headings */
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .section-card p {
+            color: #555;
+            text-align: center;
+        }
+
+        /* Stats Styling */
+        .admin_stats .col-md-6 {
+            padding: 15px;
+        }
+        .admin_stats .display-4 {
+            font-weight: bold;
+            font-size: 3.5rem;
+            margin-top: 10px;
+        }
+        .text-primary-blue { color: rgba(0, 123, 255, 1) !important; }
+        .text-info-blue { color: rgba(0, 150, 255, 1) !important; }
+
+        /* Quick Actions Styling */
+        .btn-custom-blue {
+            background-color: rgba(0, 123, 255, 1); /* Bootstrap Blue */
+            color: white;
+            border: none;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            font-weight: bold;
+            padding: 12px 25px;
+            border-radius: 8px;
+        }
+        .btn-custom-blue:hover {
+            background-color: rgba(0, 70, 150, 1); /* Darker Blue on hover */
+            transform: translateY(-2px);
+            color: white;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        /* Table Specific Styles */
+        .table-responsive {
+            margin-top: 25px;
+        }
+        .table th {
+            background-color: rgba(0, 70, 150, 0.9); /* Dark blue header for table */
+            color: white;
+            font-weight: bold;
+            vertical-align: middle;
+        }
+        .table td {
+            vertical-align: middle;
+            color: #444;
+        }
+        .table tbody tr:nth-child(even) {
+            background-color: rgba(248, 248, 255, 0.7); /* GhostWhite for even rows */
+        }
+        .table tbody tr:nth-child(odd) {
+            background-color: white;
+        }
+        .table-bordered th, .table-bordered td {
+            border-color: rgba(0, 70, 150, 0.3); /* Lighter blue border */
+        }
+        .btn-approve {
+            background-color: #28a745; /* Bootstrap Green */
+            color: white;
+            border: none;
+            width: 90px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            padding: 6px 12px;
+            border-radius: 5px;
+            transition: transform 0.2s ease;
+        }
+        .btn-reject {
+            background-color: #dc3545; /* Bootstrap Red */
+            color: white;
+            border: none;
+            width: 90px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            padding: 6px 12px;
+            border-radius: 5px;
+            margin-left: 5px;
+            transition: transform 0.2s ease;
+        }
+        .btn-approve:hover, .btn-reject:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        .status-valid { color: green; font-weight: bold; }
+        .status-invalid { color: red; font-weight: bold; }
+        .status-pending { color: orange; font-weight: bold; }
+
+
+        /* Footer Styling */
+        .footer {
+            margin-top: 40px;
+            background-color: rgba(0, 70, 150, 1); /* Dark blue footer */
+            padding: 20px;
+            color: white;
+            text-align: center;
+            width: 100%;
+            box-shadow: 0 -2px 8px rgba(0,0,0,0.2);
+        }
+        .footer span {
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div id="root">
+        <header class="d-flex align-items-center">
+            <div class="d-flex align-items-center">
+                <h1>Alliances Fintech</h1>
+                <h5> Document Administrator Dashboard</h5>
+            </div>
+            <nav class="ms-auto d-flex align-items-center">
+                <a class="nav-link-top" href="#intro-section">Home</a>
+                <a class="nav-link-top" href="#review-documents-section">Review Documents</a>
+                <form th:action="@{/logout}" method="post" class="d-inline">
+                    <button type="submit" class="logout-link">Log Out</button>
+                </form>
+            </nav>
+        </header>
+
+        <div class="content-wrapper">
+            <div th:if="${successMessage}" class="alert alert-success alert-dismissible fade show" role="alert">
+                <span th:text="${successMessage}"></span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            <div th:if="${errorMessage}" class="alert alert-danger alert-dismissible fade show" role="alert">
+                <span th:text="${errorMessage}"></span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+
+            <div id="intro-section" class="section-card dashboard_intro">
+                <h2>Welcome, Document Administrator!</h2>
+                <p>Your dedicated portal for managing and validating business loan documents efficiently.</p>
+            </div>
+
+            <div class="section-card admin_stats">
+                <h3>Dashboard Overview</h3>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h3>Documents Pending Review</h3>
+                        <p class="display-4 text-primary-blue" th:text="${pendingDocumentsCount}">0</p>
+                    </div>
+                    <div class="col-md-6">
+                        <h3>Total Documents Processed</h3>
+                        <p class="display-4 text-info-blue" th:text="${totalDocumentsCount}">0</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-card quick_actions">
+                <h3>Quick Actions</h3>
+                <div class="row justify-content-center">
+                    <div class="col-md-6 mb-3">
+                        <a href="#review-documents-section" class="btn btn-custom-blue w-100 btn-lg">Go to Document Review</a>
+                    </div>
+                </div>
+            </div>
+
+            <div id="review-documents-section" class="section-card document-review-section">
+                <h3>Documents Pending Validation</h3>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>Document ID</th>
+                                <th>Application ID</th>
+                                <th>Document Type</th>
+                                <th>View</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="document : ${file}">
+                                <td th:text="${document.documentId}"></td>
+                                <td th:text="${document.loanApplication?.applicationId ?: 'N/A'}"></td>
+                                <td th:text="${document.documentType}"></td>
+                                <td>
+<a th:href="@{'/admin/view/' + ${document.documentId}}" target="_blank" class="btn btn-sm btn-info">View</a>                                </td>
+                                <td th:id="'status-' + ${document.documentId}">
+                                    <span th:if="${document.isValid == null}" class="status-pending">Pending</span>
+                                    <span th:if="${document.isValid != null}"
+                                          th:classappend="${document.isValid ? 'status-valid' : 'status-invalid'}"
+                                          th:text="${document.isValid ? 'Approved' : 'Rejected'}"></span>
+                                </td>
+                               <td>
+    <div th:if="${document.isValid == null}">
+        <form th:action="@{/admin/documents/{id}/approve(id=${document.documentId})}" method="post" style="display:inline-block;">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+            <button type="submit" class="btn btn-approve">Approve</button>
+        </form>
+        <form th:action="@{/admin/documents/{id}/reject(id=${document.documentId})}" method="post" style="display:inline-block; margin-top: 5px;">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+            <button type="submit" class="btn btn-reject">Reject</button>
+        </form>
+    </div>
+
+    <div th:if="${document.isValid != null}">
+        <form th:action="@{/admin/documents/{id}/approve(id=${document.documentId})}" method="post" style="display:inline-block;">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+            <button type="submit" class="btn btn-sm btn-outline-success" th:disabled="${document.isValid == true}">Set Approved</button>
+        </form>
+        <form th:action="@{/admin/documents/{id}/reject(id=${document.documentId})}" method="post" style="display:inline-block; margin-top: 5px;">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+            <button type="submit" class="btn btn-sm btn-outline-danger" th:disabled="${document.isValid == false}">Set Rejected</button>
+        </form>
+    </div>
+</td>
+                            </tr>
+                            <tr th:if="${#lists.isEmpty(file)}">
+                                <td colspan="6" class="text-center">No documents found for review.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <div class="container">
+                <span>
+                    Address: Registered Office: CTS Bank tower, Plot No A-15, National Highways-45 Tambaram, GST Road, Chennai 600045, Tamil Nadu, India.
+                    <br>
+                    For any further queries, contact our toll-free number: 1800 258 2345.
+                </span>
+            </div>
+        </footer>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

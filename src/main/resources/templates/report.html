@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Report</title>
+ <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+<style>
+    html, body {
+        /* Reverted to shades of blue for background gradient */
+        background: linear-gradient(to bottom right, #e0f2f7, #c1e7f0, #9fd8e6); /* Soft blues */
+        font-family: 'Inter', sans-serif;
+        height: 100%;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+    .container{
+        text-align:center;
+	    width: 90%;
+	    max-width: 900px;
+	    background: rgba(255, 255, 255, 0.98);
+        padding: 40px;
+        border-radius: 20px;
+	    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);
+	    animation: fadeIn 1s ease-in;
+        height: auto;
+		max-height: none;
+        transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    }
+    .container:hover {
+        transform: translateY(-5px);
+        box-shadow: 0px 12px 25px rgba(0, 0, 0, 0.3);
+    }
+
+    h2 {
+        /* Blue heading color */
+        color: #4682B4; /* Steel Blue */
+        font-weight: 700;
+        margin-bottom: 30px;
+        font-size: 2.2rem;
+    }
+
+    .table {
+        margin-top: 20px;
+        border-collapse: collapse;
+        font-size: 0.95rem;
+    }
+
+    .table thead th {
+        /* Blue table header background */
+        background-color: #5bc0de; /* Light blue */
+        color: white;
+        padding: 15px;
+        font-weight: 600;
+        /* Darker blue border for header */
+        border-bottom: 2px solid #46a0c0;
+    }
+
+    .table tbody tr td {
+        padding: 12px;
+        vertical-align: middle;
+        color: #333;
+    }
+
+    .table tbody tr:nth-child(odd) {
+        /* Very light blue stripe */
+        background-color: #f0f8fa;
+    }
+
+    .table tbody tr:hover {
+        /* Lighter blue on row hover */
+        background-color: #e6f7fa;
+        cursor: default;
+    }
+
+    .btn-primary {
+        /* Primary brand blue color for button */
+        background: #007bff; /* Bootstrap primary blue */
+        border: none;
+        padding: 14px 25px;
+        font-size: 1.1rem;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+        width: auto;
+        min-width: 200px;
+        margin-top: 30px;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+    }
+ 
+    .btn-primary:hover {
+        /* Darker blue on button hover */
+        background: #0056b3;
+        transform: translateY(-3px) scale(1.02);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>
+</head>
+<body>
+	<div class="container mt-5">
+        <h2>Loan Disbursement Details</h2>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Disbursement ID</th>
+                    <th>Application ID</th>
+                    <th>Disbursed Amount</th>
+                    <th>Disbursement Date</th>
+                    <th>Repayment Schedule</th>
+                </tr>
+            </thead>
+            <tbody>
+            <tr th:if="${disbursements == null or #lists.isEmpty(disbursements)}">
+      			<td colspan="5" class="text-center p-4">No Disbursement yet.</td>
+  			</tr>
+                <tr th:each="disbursement : ${disbursements}">
+                    <td th:text="${disbursement.disbursementId}"></td>
+                    <td th:text="${disbursement.loanApplication.applicationId}"></td>
+                    <td th:text="${disbursement.disbursedAmount}"></td>
+                    <td th:text="${disbursement.disbursementDate}"></td>
+                    <td th:text="${disbursement.repaymentSchedule}"></td>
+                </tr>
+            </tbody>
+        </table>
+        <a th:href="@{/home}" class="btn btn-primary">Return to Homepage</a>
+    </div>
+
+</body>
+</html>
