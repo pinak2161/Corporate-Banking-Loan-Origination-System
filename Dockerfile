@@ -10,6 +10,9 @@ COPY mvnw .
 COPY .mvn .mvn
 COPY src ./src
 
+# Make the Maven Wrapper script executable
+RUN chmod +x mvnw
+
 # Use Maven to build the project. We skip tests for a faster build.
 RUN ./mvnw clean install -DskipTests
 
