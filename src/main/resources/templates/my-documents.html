@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Uploaded Documents</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+<style>
+    html, body {
+            /* Changed to blue shades gradient */
+            background: linear-gradient(to right, rgba(173, 216, 230, 0.7), rgba(100, 149, 237, 0.8));
+            font-family: 'Times New Roman', Times, serif;
+            height: 100%;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    .container{
+        text-align:center;
+	    width: 90%;
+	    max-width: 900px;
+	    background: rgba(255, 255, 255, 0.95);
+        padding: 30px;
+	    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.4);
+	    animation: fadeIn 1s ease-in;
+        height: auto;
+		max-height: none;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+    .btn-primary {
+            /* Changed to dark blue from admin theme */
+            background: #002D62;
+            border: none;
+            padding: 12px 20px;
+            font-size: 18px;
+            border-radius: 10px;
+            transition: 0.3s;
+            width: 40%;
+            margin-top: 12px;
+            font-weight: bold;
+        }
+
+        .btn-primary:hover {
+            /* Changed to darker blue from admin theme hover */
+            background:#001F4C;
+            transform: scale(1.05);
+        }
+    table {
+        margin-top: 20px;
+        background-color: #fff;
+    }
+    th {
+        /* Changed to dark blue from admin theme table header */
+        background-color: #002D62;
+        color: #ffffff; /* Text color for headers */
+    }
+    /* Status Badges */
+    .status-approved { color: #28a745; font-weight: bold; }
+    .status-rejected { color: #dc3545; font-weight: bold; }
+    .status-pending { color: #ffc107; font-weight: bold; }
+</style>
+</head>
+<body>
+
+<div class="container mt-5">
+    <h2>Your Uploaded Documents</h2>
+
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>Application ID</th>
+                <th>Document ID</th>
+                <th>Document Type</th>
+                <th>Upload Date</th>
+                <th>File Link</th>
+                <th>Validation Status</th>
+            </tr>
+        </thead>
+        <tbody>
+        	<tr th:if="${documents == null or #lists.isEmpty(documents)}">
+      			<td colspan="6" class="text-center">No documents found.</td>
+            </tr>
+            <tr th:each="document : ${documents}">
+                <td th:text="${document.loanApplication?.applicationId ?: 'N/A'}"></td>
+                <td th:text="${document.documentId}"></td>
+                <td th:text="${document.documentType}"></td>
+                <td th:text="${document.uploadDate}"></td>
+                <td>
+                    <a th:href="@{'/documents/download/'+${document.documentId}}" target="_blank">View Document</a>
+                </td>
+                <td>
+                    <span th:classappend="${document.isValid == null ? 'status-pending' : (document.isValid ? 'status-approved' : 'status-rejected')}"
+                          th:text="${document.isValid == null ? 'Pending' : (document.isValid ? 'Approved' : 'Rejected')}"></span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <a th:href="@{/home}" class="btn btn-primary">Return to Homepage</a>
+</div>
+
+</body>
+</html>

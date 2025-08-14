@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup Form</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <style>
+        body {
+            /* Background: Sky Blue (#87CEEB) to Carolina Blue (#A2C8E6) gradient */
+            background: linear-gradient(to right, rgba(135, 206, 235, 0.7), rgba(162, 200, 230, 0.8));
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            flex-direction: column; /* Allows content to stack if needed for responsiveness */
+        }
+
+        header {
+            /* Header Background: Navy Blue (#000080) to Steel Blue (#4682B4) gradient */
+            background: linear-gradient(to right, #000080, #4682B4);
+            height: 70px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 30px;
+            z-index: 1000;
+        }
+
+        header h1 {
+            margin-left: 30px;
+            margin-right: 50px;
+            color: white;
+            font-family: 'Arial', Helvetica;
+            font-weight: bolder;
+            font-style: italic;
+        }
+
+        header h5 {
+            color: white;
+        }
+
+        .container {
+            display: flex;
+            background: white; /* Kept white for the container background */
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            width: 500px;
+            max-width: 100%;
+            margin-top: 80px; /* Adjusted to ensure space below navbar */
+        }
+        
+        .form-section {
+            flex: 1;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .form-section h2 {
+            margin-bottom: 20px;
+            color: #000080; /* Navy Blue */
+        }
+
+        .form-section input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #B0E0E6; /* Powder Blue border */
+            border-radius: 4px;
+        }
+
+        .form-section input:focus {
+            border-color: #000080; /* Navy Blue border on focus */
+            box-shadow: 0 0 0 0.25rem rgba(0, 0, 128, 0.25); /* Navy Blue focus ring */
+        }
+
+        .form-section button {
+            width: 100%;
+            padding: 10px;
+            background-color: #000080; /* Navy Blue */
+            border: none;
+            border-radius: 4px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            margin-bottom: 10px;
+            font-weight: bold; /* Make button text bold */
+        }
+
+        .form-section button:hover {
+            background-color: #4682B4; /* Steel Blue for hover */
+        }
+
+        .signup-link {
+            font-size: 14px;
+            color: #000080; /* Navy Blue */
+            text-decoration: none;
+        }
+
+        .signup-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Password Strength Indicator Styles */
+        .password-strength-container {
+            margin-top: 5px;
+            margin-bottom: 15px;
+            text-align: left;
+        }
+        .password-strength-bar {
+            width: 100%;
+            height: 8px;
+            background-color: #eee;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 5px;
+        }
+        .password-strength-bar div {
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s ease-in-out, background-color 0.3s ease-in-out;
+            border-radius: 4px;
+        }
+        /* Adjusted classes for visual strength feedback */
+        .password-strength-bar.weak div {
+            width: 33%;
+            background-color: #dc3545; /* Red */
+        }
+        .password-strength-bar.medium div {
+            width: 66%;
+            background-color: #ffc107; /* Yellow */
+        }
+        .password-strength-bar.strong div {
+            width: 100%;
+            background-color: #28a745; /* Green */
+        }
+        .password-strength-text {
+            font-size: 0.8em;
+            color: #555;
+            margin-top: 5px;
+        }
+        /* Bootstrap invalid feedback */
+        .form-section input.is-invalid {
+            border-color: #dc3545;
+        }
+        /* Ensure invalid-feedback is hidden by default and shown only when 'is-invalid' class is present */
+        .form-section .invalid-feedback {
+            display: none; /* Hide by default */
+            color: #dc3545;
+            font-size: 0.8em;
+            margin-top: -5px;
+            margin-bottom: 10px;
+            text-align: left;
+        }
+        .form-section input.is-invalid + .invalid-feedback {
+            display: block; /* Show only when input has 'is-invalid' class */
+        }
+
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column; /* Stack image and form vertically */
+                width: 95%; /* Adjust width for smaller screens */
+            }
+
+            .image-section {
+                order: 2; /* Move image below the form on small screens */
+            }
+
+            .form-section {
+                order: 1; /* Move form above the image on small screens */
+                padding: 30px 20px; /* Adjust padding */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <header class="d-flex align-items-center justify-content-between">
+            <div class="d-flex align-items-center">
+                <h1>Alliances Fintech</h1>
+            </div>
+        </header>
+
+        <div class="container">
+            <div class="form-section">
+                <h2>Sign Up</h2>
+                <form th:action="@{/signup}" th:object="${user}" method="post" id="signupForm" novalidate>
+                    <div class="mb-3">
+                        <input type="text" placeholder="Name" th:field="*{name}" id="name" required class="form-control">
+                        <div class="invalid-feedback" id="nameFeedback">Name is required.</div>
+                    </div>
+                    <div class="mb-3">
+                        <input type="email" placeholder="Email" th:field="*{email}" id="email" required class="form-control">
+                        <div class="invalid-feedback" id="emailFeedback">Please enter a valid email address.</div>
+                    </div>
+                    <div class="mb-3">
+                        <input type="password" placeholder="Password" th:field="*{password}" id="password" required class="form-control">
+                        <div class="invalid-feedback" id="passwordFeedback">
+                            Password must be at least 6 characters long and include an uppercase letter, a number, and a special character.
+                        </div>
+                        <div class="password-strength-container">
+                            <div class="password-strength-bar"><div id="passwordStrengthBar"></div></div>
+                            <span id="passwordStrengthText"></span>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-custom">Sign Up</button>
+                </form>
+                <p><a th:href="@{/login}" class="signup-link">Go back to Login Page</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Get elements by ID
+        const signupForm = document.getElementById('signupForm');
+        const nameField = document.getElementById('name');
+        const emailField = document.getElementById('email');
+        const passwordField = document.getElementById('password');
+
+        // Feedback elements (optional, can be used to display custom messages)
+        const nameFeedback = document.getElementById('nameFeedback');
+        const emailFeedback = document.getElementById('emailFeedback');
+        const passwordFeedback = document.getElementById('passwordFeedback'); // This is the generic feedback div
+
+        // Password strength elements
+        const passwordStrengthBarInner = document.getElementById('passwordStrengthBar'); // The inner div that fills up
+        const passwordStrengthBarContainer = passwordStrengthBarInner.parentElement; // The outer container div for classes
+        const passwordStrengthText = document.getElementById('passwordStrengthText');
+
+        // Function to check password strength
+        function checkPasswordStrength(password) {
+            let strength = 0;
+            // Criteria: minimum length 6, uppercase, number, special character
+            const regex = [];
+            regex.push(".*[A-Z].*"); // Uppercase
+            regex.push(".*[0-9].*"); // Number
+            regex.push(".*[!@#$%^&*()_+\-=\[\]{};':\"\\|,.<>\/?].*"); // Special character
+
+            if (password.length >= 6) {
+                strength += 1;
+            }
+
+            for (let i = 0; i < regex.length; i++) {
+                if (new RegExp(regex[i]).test(password)) {
+                    strength += 1;
+                }
+            }
+
+            let strengthText = "";
+            let barWidth = "0%";
+            let barColorClass = '';
+
+            // Reset classes for the outer container and inner bar
+            passwordStrengthBarContainer.classList.remove('weak', 'medium', 'strong');
+            passwordStrengthBarInner.style.width = barWidth;
+
+            if (password.length === 0) {
+                 strengthText = ""; // No text if password is empty
+            } else if (strength <= 1) { // Only length or one other criteria met (or none)
+                strengthText = "Weak";
+                barColorClass = 'weak';
+                barWidth = "33%";
+            } else if (strength === 2) {
+                strengthText = "Medium";
+                barColorClass = 'medium';
+                barWidth = "66%";
+            } else if (strength >= 3) { // Length + all 3 regex criteria
+                strengthText = "Strong";
+                barColorClass = 'strong';
+                barWidth = "100%";
+            }
+            
+            // Apply styles
+            passwordStrengthBarInner.style.width = barWidth;
+            if (barColorClass) {
+                passwordStrengthBarContainer.classList.add(barColorClass);
+            }
+            passwordStrengthText.textContent = strengthText ? `Password Strength: ${strengthText}` : '';
+        }
+
+        // Function to validate name
+        function validateName() {
+            if (nameField.value.trim() === '') {
+                nameField.classList.add('is-invalid');
+                nameFeedback.textContent = 'Name is required.';
+                return false;
+            } else {
+                nameField.classList.remove('is-invalid');
+                nameFeedback.textContent = ''; // Clear message when valid
+                return true;
+            }
+        }
+
+        // Function to validate email
+        function validateEmail() {
+            if (!emailField.checkValidity()) { // checkValidity() uses built-in HTML5 email validation
+                emailField.classList.add('is-invalid');
+                emailFeedback.textContent = 'Please enter a valid email address (e.g., example@domain.com).';
+                return false;
+            } else {
+                emailField.classList.remove('is-invalid');
+                emailFeedback.textContent = ''; // Clear message when valid
+                return true;
+            }
+        }
+
+        // Function to validate password complexity
+        function validatePassword() {
+            const password = passwordField.value;
+            const hasMinimumLength = password.length >= 6;
+            const hasUppercase = /[A-Z]/.test(password);
+            const hasNumber = /[0-9]/.test(password);
+            const hasSpecialChar = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password);
+
+            let isValid = true;
+            let feedbackMessage = 'Password must be at least 6 characters long and include:';
+            let requirements = [];
+
+            if (!hasMinimumLength) requirements.push('Minimum 6 characters');
+            if (!hasUppercase) requirements.push('An uppercase letter');
+            if (!hasNumber) requirements.push('A number');
+            if (!hasSpecialChar) requirements.push('A special character');
+
+            if (requirements.length > 0) {
+                isValid = false;
+                passwordField.classList.add('is-invalid');
+                passwordFeedback.textContent = feedbackMessage + ' ' + requirements.join(', ') + '.';
+            } else {
+                passwordField.classList.remove('is-invalid');
+                passwordFeedback.textContent = ''; // Clear message when valid
+            }
+            return isValid;
+        }
+
+        // --- Event Listeners for Validation ---
+        // Validate on blur (when user leaves the field)
+        nameField.addEventListener('blur', validateName);
+        emailField.addEventListener('blur', validateEmail);
+        passwordField.addEventListener('blur', validatePassword);
+
+        // Validate password strength on input (as user types)
+        passwordField.addEventListener('input', function() {
+            checkPasswordStrength(this.value);
+            // Optionally, you can also run validatePassword() here for immediate feedback,
+            // but 'blur' is generally preferred for full error messages.
+            // If you want immediate full validation messages, uncomment the next line:
+            // validatePassword(); 
+        });
+
+        // Form submission listener (final validation check before sending)
+        signupForm.addEventListener('submit', function(event) {
+            // Re-validate all fields on submit to catch any unvalidated fields or last-minute issues
+            const isNameValid = validateName();
+            const isEmailValid = validateEmail();
+            const isPasswordValid = validatePassword();
+
+            if (!isNameValid || !isEmailValid || !isPasswordValid) {
+                event.preventDefault(); // Prevent form submission if any validation fails
+                // Optionally scroll to the first invalid field
+                const firstInvalid = document.querySelector('.is-invalid');
+                if (firstInvalid) {
+                    firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            }
+        });
+
+        // --- Original JavaScript for history and form reset (adjusted) ---
+        // Reloads the page if navigating back via browser history (type 2 is BFCache restore or history traversal)
+        if (performance.navigation.type === 2) {
+            location.reload(true);
+        }
+
+        // Prevents users from going back in browser history after a successful submission or initial page load
+        window.onload = function() {
+            window.history.pushState(null, "", window.location.href);
+            window.onpopstate = function() {
+                window.history.pushState(null, "", location.href);
+            };
+        };
+        // --- END Original JavaScript ---
+    </script>
+</body>
+</html>

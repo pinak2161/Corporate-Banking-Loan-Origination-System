@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Disbursement Report</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            /* Changed to blue shades gradient as per your theme */
+            background: linear-gradient(to right, rgba(0, 102, 153, 0.7), rgba(0, 153, 204, 0.8));
+            font-family: Arial, sans-serif; /* Kept existing font-family */
+            padding: 20px;
+            min-height: 100vh; /* Ensure full height for background */
+            display: flex; /* Use flexbox to center content */
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            max-width: 900px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0px 4px 10px rgba(0,0,0,0.5);
+            animation: fadeIn 1s ease-in;
+            margin-top: 20px; /* Add some top/bottom margin for spacing */
+            margin-bottom: 20px;
+        }
+        h2 {
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 20px;
+            /* Changed to dark blue from your theme */
+            color: #002D62;
+            font-family: 'Times New Roman', Times, serif; /* Kept existing font-family */
+        }
+        .table {
+            margin-top: 20px;
+            background-color: #fff; /* Ensure table background is white */
+            border-radius: 8px; /* Added slight border-radius for consistency */
+            overflow: hidden; /* Ensures border-radius applies to table */
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Added subtle shadow for table */
+        }
+        .table thead {
+            /* Changed to dark blue from your theme */
+            background-color: #002D62;
+            color: white; /* Ensure text color is white for headers */
+        }
+        .table th, .table td {
+            vertical-align: middle;
+            padding: 12px;
+            text-align: center;
+        }
+
+        .btn-export, .btn-primary {
+            /* Changed to dark blue from your theme */
+            background-color: #002D62;
+            color:white;
+            border: none;
+            border-radius: 8px; /* Adjusted border-radius for consistency */
+            cursor: pointer;
+            padding: 10px 20px; /* Added padding for better button appearance */
+            font-size: 16px; /* Adjusted font size */
+            font-weight: bold; /* Made text bold */
+            transition: background-color 0.3s, transform 0.3s; /* Added transition */
+            text-decoration: none; /* Ensure no underline for links */
+            display: inline-block; /* Allow padding and margin */
+        }
+        .btn-export:hover, .btn-primary:hover {
+            /* Changed to darker blue from your theme */
+            background:#001F4C;
+            transform: scale(1.05);
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Loan Disbursement Report</h2>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Disbursement ID</th>
+                <th>Application ID</th>
+                <th>Disbursed Amount</th>
+                <th>Disbursement Date</th>
+                <th>Repayment Schedule</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="disbursement : ${disbursements}">
+                <td th:text="${disbursement.disbursementId}"></td>
+                <td th:text="${disbursement.loanApplication.applicationId}"></td>
+                <td th:text="${disbursement.disbursedAmount}"></td>
+                <td th:text="${disbursement.disbursementDate}"></td>
+                <td th:text="${disbursement.repaymentSchedule}"></td>
+            </tr>
+            <tr th:if="${#lists.isEmpty(disbursements)}">
+                <td colspan="5" class="text-center">No disbursements found.</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="text-center">
+        <div>
+            <a href="/admin" class="btn btn-primary">Back to Dashboard</a>
+        </div>
+        <div style="margin-top:15px;"> <button class="btn-export" onclick="exportReport()">Export Report</button>
+        </div>
+       
+    </div>
+</div>
+
+<script>
+    function exportReport() {
+        let csvContent = "Disbursement ID,Application ID,Disbursed Amount,Disbursement Date,Repayment Schedule\n";
+    
+        document.querySelectorAll("tbody tr").forEach(row => {
+            // Check if it's the "No disbursements found." row
+            if (row.children.length > 1) { // Assuming a valid data row has more than one cell
+                let rowData = Array.from(row.children).map(cell => cell.textContent.trim()).join(","); // Added .trim() for clean data
+                csvContent += rowData + "\n";
+            }
+        });
+    
+        let blob = new Blob([csvContent], { type: "text/csv" });
+        let link = document.createElement("a");
+        link.href = URL.createObjectURL(blob);
+        link.download = "Disbursement_Report.csv";
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+    </script>
+
+</body>
+</html>
