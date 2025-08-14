@@ -4,8 +4,10 @@ FROM openjdk:17-jdk-slim
 # Set the working directory inside the container
 WORKDIR /app
 
-# Copy the Maven project files to the container
+# Copy the Maven project files, including the Maven Wrapper
 COPY pom.xml .
+COPY mvnw .
+COPY .mvn .mvn
 COPY src ./src
 
 # Use Maven to build the project. We skip tests for a faster build.
